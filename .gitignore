@@ -1,0 +1,23 @@
+# secrets - never commit
+.env
+.env.*
+!.env.example
+.kaggle/
+
+# environments / build output
+.venv/
+__pycache__/
+*.pyc
+node_modules/
+.next/
+
+# large data and model files (hosted on the Hugging Face Space instead; GitHub limit is 100 MB/file)
+/data/
+models/weights/
+*.pt
+*.pth
+/models/**/*.npz
+*.log
+
+# local deployment working copies
+deploy/

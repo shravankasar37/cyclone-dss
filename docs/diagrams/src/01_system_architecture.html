@@ -1,0 +1,80 @@
+<!doctype html><html><head><meta charset='utf-8'><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1600px;height:900px;background:#fff;font-family:'Segoe UI',Arial,sans-serif;color:#1d2433;padding:38px 46px;overflow:hidden}
+h1{font-size:40px;font-weight:800;color:#1f3f7a;letter-spacing:-.5px}
+.sub{font-size:21px;color:#5b6679;margin-top:6px}
+.row{display:flex;gap:16px;align-items:stretch}
+.col{flex:1;border-radius:18px;padding:16px 16px 14px;border:2.5px solid;display:flex;flex-direction:column;gap:9px}
+.col h3{font-size:21px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;text-align:center;padding:6px 0;border-radius:10px;color:#fff}
+.box{background:#fff;border-radius:12px;padding:9px 11px;font-size:17px;line-height:1.3;border:1.5px solid #d9dfe8}
+.box b{font-size:17.5px}
+.small{font-size:14.5px;color:#5b6679}
+.arrow{align-self:center;font-size:40px;color:#8a94a6;font-weight:300}
+.c1{border-color:#2f6fd0;background:#f0f5fd}.c1 h3{background:#2f6fd0}
+.c2{border-color:#3a9b5c;background:#effaf3}.c2 h3{background:#3a9b5c}
+.c3{border-color:#e0a100;background:#fffaeb}.c3 h3{background:#d49400}
+.c4{border-color:#e5484d;background:#fff2f2}.c4 h3{background:#e5484d}
+.c5{border-color:#3b82c4;background:#eef6fc}.c5 h3{background:#3b82c4}
+.c6{border-color:#8a5cd6;background:#f6f1fe}.c6 h3{background:#8a5cd6}
+.new{display:inline-block;background:#ff7a1a;color:#fff;font-size:12px;font-weight:800;border-radius:6px;padding:1px 6px;margin-left:4px;vertical-align:2px}
+.foot{position:absolute;bottom:22px;left:46px;right:46px;font-size:15px;color:#7a8597}
+table{border-collapse:collapse;width:100%}
+.arch .col h3{font-size:17px;padding:5px 0}
+.arch .box{font-size:15.5px;padding:7px 10px}
+.arch .box b{font-size:16px}
+.arch .small{font-size:13.5px}
+.tall td{padding-top:17px!important;padding-bottom:17px!important}
+.tall th{padding:14px 12px}
+</style></head><body>
+<h1>System Architecture</h1>
+<div class="sub">Multi-source satellite + best-track + reanalysis data → six AI models → decision layer → API → single-screen dashboard</div>
+<div class="row arch" style="margin-top:22px;height:705px">
+ <div class="col c1"><h3>1 · Data sources</h3>
+  <div class="box"><b>GridSat-B1</b> (NOAA)<br>basin-wide IR + water vapour, 3-hourly, 0.07°</div>
+  <div class="box"><b>TCIR</b> benchmark<br>storm-centred IR · WV · microwave, 2003–16</div>
+  <div class="box"><b>INSAT-3D</b> (MOSDAC/Kaggle)<br>external test + live-feed slot</div>
+  <div class="box"><b>IBTrACS</b> (NOAA)<br>track, wind, pressure 1982–2025</div>
+  <div class="box"><b>ERA5</b> SST, shear, humidity · <b>WorldPop</b> population · <b>Natural Earth</b> coast</div>
+ </div>
+ <div class="arrow">➜</div>
+ <div class="col c2"><h3>2 · Preparation</h3>
+  <div class="box">Brightness temp → normalised image, 14° storm crops</div>
+  <div class="box">Southern-hemisphere storms mirrored to NIO rotation</div>
+  <div class="box">IBTrACS ↔ image matching by time + position</div>
+  <div class="box">IMD scale labels (D → SuCS) + Dvorak T-numbers</div>
+  <div class="box">ADT-lite cloud features (eye, ring, cold cover)</div>
+  <div class="box"><b>Split by storm & year</b> — no leakage</div>
+ </div>
+ <div class="arrow">➜</div>
+ <div class="col c3" style="flex:1.25"><h3>3 · AI models</h3>
+  <div class="box"><b>Basin detector</b> ResNet-18 heatmap <span class="new">NEW</span><br><span class="small">finds every system in the raw scene</span></div>
+  <div class="box"><b>Intensity CNN</b> EfficientNet-B0<br><span class="small">wind · Dvorak T · IMD class · Grad-CAM</span></div>
+  <div class="box"><b>ConvLSTM</b> 8-frame image sequence<br><span class="small">24 h change (experimental RI)</span></div>
+  <div class="box"><b>RI early warning</b> LightGBM <span class="new">NEW</span><br><span class="small">P(+30 kt / 24 h), SHAP reasons</span></div>
+  <div class="box"><b>Genesis</b> LightGBM <span class="new">NEW</span> · <b>Track</b> LSTM + calibrated cone</div>
+ </div>
+ <div class="arrow">➜</div>
+ <div class="col c4"><h3>4 · Decision layer</h3>
+  <div class="box">Landfall probability, place & time window (50-member ensemble)</div>
+  <div class="box">Population exposed (gale envelope)</div>
+  <div class="box">District staging: Watch / Alert / Warning</div>
+  <div class="box">Fishermen sea-area warnings</div>
+  <div class="box"><b>CAP 1.2 XML</b> (SACHET format) + SMS EN/HI/GU</div>
+ </div>
+ <div class="arrow">➜</div>
+ <div class="col c5"><h3>5 · Backend</h3>
+  <div class="box"><b>FastAPI</b> REST · OpenAPI /docs</div>
+  <div class="box">PyTorch · LightGBM inference</div>
+  <div class="box">SQLite audit log of every prediction</div>
+  <div class="box">Scene cache · Gemini bulletin (guard-railed)</div>
+  <div class="box">Docker image</div>
+ </div>
+ <div class="arrow">➜</div>
+ <div class="col c6"><h3>6 · Dashboard</h3>
+  <div class="box"><b>Operations</b> console: map, cone, RI, landfall, alerts</div>
+  <div class="box"><b>Basin scan</b>: auto-detection & tracks</div>
+  <div class="box"><b>Satellite</b>: Grad-CAM, Dvorak</div>
+  <div class="box"><b>Validation</b>: all held-out metrics</div>
+  <div class="box small">Next.js · Mapbox · Recharts · neumorphic UI</div>
+ </div>
+</div></body></html>

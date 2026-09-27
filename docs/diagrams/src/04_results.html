@@ -1,0 +1,52 @@
+<!doctype html><html><head><meta charset='utf-8'><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1600px;height:900px;background:#fff;font-family:'Segoe UI',Arial,sans-serif;color:#1d2433;padding:38px 46px;overflow:hidden}
+h1{font-size:40px;font-weight:800;color:#1f3f7a;letter-spacing:-.5px}
+.sub{font-size:21px;color:#5b6679;margin-top:6px}
+.row{display:flex;gap:16px;align-items:stretch}
+.col{flex:1;border-radius:18px;padding:16px 16px 14px;border:2.5px solid;display:flex;flex-direction:column;gap:9px}
+.col h3{font-size:21px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;text-align:center;padding:6px 0;border-radius:10px;color:#fff}
+.box{background:#fff;border-radius:12px;padding:9px 11px;font-size:17px;line-height:1.3;border:1.5px solid #d9dfe8}
+.box b{font-size:17.5px}
+.small{font-size:14.5px;color:#5b6679}
+.arrow{align-self:center;font-size:40px;color:#8a94a6;font-weight:300}
+.c1{border-color:#2f6fd0;background:#f0f5fd}.c1 h3{background:#2f6fd0}
+.c2{border-color:#3a9b5c;background:#effaf3}.c2 h3{background:#3a9b5c}
+.c3{border-color:#e0a100;background:#fffaeb}.c3 h3{background:#d49400}
+.c4{border-color:#e5484d;background:#fff2f2}.c4 h3{background:#e5484d}
+.c5{border-color:#3b82c4;background:#eef6fc}.c5 h3{background:#3b82c4}
+.c6{border-color:#8a5cd6;background:#f6f1fe}.c6 h3{background:#8a5cd6}
+.new{display:inline-block;background:#ff7a1a;color:#fff;font-size:12px;font-weight:800;border-radius:6px;padding:1px 6px;margin-left:4px;vertical-align:2px}
+.foot{position:absolute;bottom:22px;left:46px;right:46px;font-size:15px;color:#7a8597}
+table{border-collapse:collapse;width:100%}
+.arch .col h3{font-size:17px;padding:5px 0}
+.arch .box{font-size:15.5px;padding:7px 10px}
+.arch .box b{font-size:16px}
+.arch .small{font-size:13.5px}
+.tall td{padding-top:17px!important;padding-bottom:17px!important}
+.tall th{padding:14px 12px}
+</style></head><body><h1>Results on held-out data</h1><div class='sub'>No single 'accuracy %' — each model is measured the way forecasters measure it</div><div style='display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:26px'><div style="border-radius:18px;border:2.5px solid #3a9b5c;padding:20px 18px;height:285px;background:#fbfcfe">
+      <div style="font-size:18px;font-weight:700;color:#5b6679;text-transform:uppercase;letter-spacing:.4px">Identified before cyclone stage</div>
+      <div style="font-size:52px;font-weight:800;color:#3a9b5c;margin:14px 0 8px">24–42 h</div>
+      <div style="font-size:18px;color:#3b4557;line-height:1.3">6 of 6 demo storms, raw imagery only</div></div><div style="border-radius:18px;border:2.5px solid #3a9b5c;padding:20px 18px;height:285px;background:#fbfcfe">
+      <div style="font-size:18px;font-weight:700;color:#5b6679;text-transform:uppercase;letter-spacing:.4px">Storm fixes detected</div>
+      <div style="font-size:52px;font-weight:800;color:#3a9b5c;margin:14px 0 8px">79–94%</div>
+      <div style="font-size:18px;color:#3b4557;line-height:1.3">centre error 41–85 km</div></div><div style="border-radius:18px;border:2.5px solid #2f6fd0;padding:20px 18px;height:285px;background:#fbfcfe">
+      <div style="font-size:18px;font-weight:700;color:#5b6679;text-transform:uppercase;letter-spacing:.4px">Satellite wind error</div>
+      <div style="font-size:34px;font-weight:800;color:#2f6fd0;margin:14px 0 8px">6.2–7.4 kt</div>
+      <div style="font-size:18px;color:#3b4557;line-height:1.3">MAE on unseen 2016 NIO storms</div></div><div style="border-radius:18px;border:2.5px solid #2f6fd0;padding:20px 18px;height:285px;background:#fbfcfe">
+      <div style="font-size:18px;font-weight:700;color:#5b6679;text-transform:uppercase;letter-spacing:.4px">Cross-basin transfer gain</div>
+      <div style="font-size:52px;font-weight:800;color:#2f6fd0;margin:14px 0 8px">+14.9%</div>
+      <div style="font-size:18px;color:#3b4557;line-height:1.3">vs training on NIO alone</div></div><div style="border-radius:18px;border:2.5px solid #e5484d;padding:20px 18px;height:285px;background:#fbfcfe">
+      <div style="font-size:18px;font-weight:700;color:#5b6679;text-transform:uppercase;letter-spacing:.4px">RI storms warned (2020–25)</div>
+      <div style="font-size:52px;font-weight:800;color:#e5484d;margin:14px 0 8px">8 / 8</div>
+      <div style="font-size:18px;color:#3b4557;line-height:1.3">ROC-AUC 0.85 · 7 of 19 non-RI storms also flagged</div></div><div style="border-radius:18px;border:2.5px solid #d49400;padding:20px 18px;height:285px;background:#fbfcfe">
+      <div style="font-size:18px;font-weight:700;color:#5b6679;text-transform:uppercase;letter-spacing:.4px">Genesis skill</div>
+      <div style="font-size:52px;font-weight:800;color:#d49400;margin:14px 0 8px">AUC 0.89</div>
+      <div style="font-size:18px;color:#3b4557;line-height:1.3">0.76 from a system's very first fix</div></div><div style="border-radius:18px;border:2.5px solid #3b82c4;padding:20px 18px;height:285px;background:#fbfcfe">
+      <div style="font-size:18px;font-weight:700;color:#5b6679;text-transform:uppercase;letter-spacing:.4px">Uncertainty cone coverage</div>
+      <div style="font-size:52px;font-weight:800;color:#3b82c4;margin:14px 0 8px">66%</div>
+      <div style="font-size:18px;color:#3b4557;line-height:1.3">target 67% — calibrated</div></div><div style="border-radius:18px;border:2.5px solid #3b82c4;padding:20px 18px;height:285px;background:#fbfcfe">
+      <div style="font-size:18px;font-weight:700;color:#5b6679;text-transform:uppercase;letter-spacing:.4px">Track error 24 / 48 / 72 h</div>
+      <div style="font-size:34px;font-weight:800;color:#3b82c4;margin:14px 0 8px">140 / 300 / 447 km</div>
+      <div style="font-size:18px;color:#3b4557;line-height:1.3">12–18% better than persistence</div></div></div><div class='box' style='margin-top:20px;font-size:18px'><b>Stated honestly:</b> track error is ≈2× IMD's operational forecasts (no NWP steering winds) · detector precision 57% / recall 51% on all systems incl. weak depressions · extra satellite channels add ≈0.1 kt · image sequences did not improve RI — reported, not hidden.</div></body></html>

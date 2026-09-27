@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PS 26070 Prototype Guide</title>
+<style>
+@page { size: A4; margin: 14mm 13mm 16mm 13mm; }
+* { box-sizing: border-box; }
+body { font-family: "Segoe UI", "Nirmala UI", Arial, sans-serif; color: #1d2433; font-size: 10.6pt; line-height: 1.45; margin: 0; }
+h1 { font-size: 21pt; color: #1f3f7a; margin: 0 0 4px; letter-spacing: -.3px; }
+h2 { font-size: 15.5pt; color: #1f3f7a; margin: 0 0 8px; padding-bottom: 5px; border-bottom: 2.5px solid #1f3f7a; }
+h3 { font-size: 12pt; color: #1f3f7a; margin: 14px 0 5px; }
+p { margin: 5px 0 7px; }
+.section { page-break-before: always; }
+.lead { font-size: 11.5pt; color: #3b4557; }
+.muted { color: #5b6679; }
+.small { font-size: 9pt; }
+ul, ol { margin: 4px 0 8px; padding-left: 20px; }
+li { margin: 2px 0; }
+table { width: 100%; border-collapse: collapse; margin: 6px 0 10px; font-size: 9.6pt; page-break-inside: auto; }
+tr { page-break-inside: avoid; }
+th { background: #1f3f7a; color: #fff; text-align: left; padding: 6px 7px; font-weight: 600; }
+td { padding: 5px 7px; border-bottom: 1px solid #dde3ec; vertical-align: top; }
+tr:nth-child(even) td { background: #f6f8fb; }
+.fig { margin: 8px 0 12px; text-align: center; page-break-inside: avoid; }
+.fig img { width: 100%; border: 1px solid #d9dfe8; border-radius: 6px; }
+.fig .cap { font-size: 8.8pt; color: #5b6679; margin-top: 3px; }
+.box { border: 1.5px solid #cdd6e3; border-radius: 8px; padding: 8px 11px; margin: 8px 0; background: #f8fafd; page-break-inside: avoid; }
+.good { border-color: #3a9b5c; background: #f1faf4; }
+.warn { border-color: #e0a100; background: #fffaeb; }
+.bad { border-color: #e5484d; background: #fff4f4; }
+.tag { display: inline-block; font-size: 8pt; font-weight: 700; border-radius: 4px; padding: 0 5px; color: #fff; }
+.t-done { background: #3a9b5c; } .t-part { background: #d49400; } .t-no { background: #e5484d; }
+code, .mono { font-family: Consolas, "Courier New", monospace; font-size: 9pt; background: #eef1f6; padding: 0 3px; border-radius: 3px; }
+pre { font-family: Consolas, monospace; font-size: 8.6pt; background: #f1f4f8; border: 1px solid #dde3ec; border-radius: 6px; padding: 7px 9px; white-space: pre-wrap; margin: 5px 0 9px; page-break-inside: avoid; }
+.cover { height: 265mm; display: flex; flex-direction: column; justify-content: center; }
+.cover .band { background: #1f3f7a; color: #fff; border-radius: 12px; padding: 26px 28px; }
+.cover .band h1 { color: #fff; font-size: 26pt; line-height: 1.15; }
+.cover .band p { color: #dbe6ff; font-size: 12.5pt; }
+.kv td:first-child { width: 32%; font-weight: 600; color: #1f3f7a; }
+.vo td:nth-child(1) { width: 11%; font-weight: 700; white-space: nowrap; }
+.vo td:nth-child(2) { width: 23%; }
+.vo td:nth-child(3) { width: 20%; }
+.vo td:nth-child(4) { font-style: italic; }
+.slide { border: 2px solid #1f3f7a; border-radius: 8px; padding: 9px 12px 7px; margin: 10px 0; page-break-inside: avoid; }
+.slide .sh { font-weight: 800; color: #1f3f7a; font-size: 11.5pt; margin-bottom: 4px; }
+.two { display: flex; gap: 12px; }
+.two > div { flex: 1; }
+.toc li { margin: 3px 0; font-size: 11pt; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="band">
+    <p style="margin:0 0 10px;font-weight:700;letter-spacing:1px">SMART INDIA HACKATHON 2026 · PS 26070</p>
+    <h1>AI/ML System for Identification, Classification &amp; Prediction of Tropical Cyclones using Multi-Source Satellite Data</h1>
+    <p style="margin-top:14px">Prototype guide — what it does, results, demo &amp; video script, PPT content, and how to take it live</p>
+  </div>
+  <table class="kv" style="margin-top:22px;font-size:11pt">
+    <tr><td>Problem Statement ID</td><td>26070</td></tr>
+    <tr><td>Organisation</td><td>Ministry of Earth Sciences (MoES) — India Meteorological Department (IMD)</td></tr>
+    <tr><td>Theme / Category</td><td>Disaster Management · Software</td></tr>
+    <tr><td>Team</td><td>NerveAi (Team ID: ______ )</td></tr>
+    <tr><td>Prototype</td><td>Web dashboard (Next.js) + FastAPI backend + 7 trained AI models · runs locally, Docker-ready</td></tr>
+  </table>
+  <div class="box" style="margin-top:14px">
+    <b>Contents</b>
+    <ol class="toc">
+      <li>What the prototype does and the problem it solves</li>
+      <li>How it solves the problem (end-to-end flow)</li>
+      <li>How the prototype shows it — the four screens</li>
+      <li>How it matches the problem statement's expectations</li>
+      <li>Results and success rates of the ML models</li>
+      <li>What we built differently</li>
+      <li>Demo walkthrough (click path with deep links)</li>
+      <li>5-minute video: timeline, screens and voice-over</li>
+      <li>PPT content, slide by slide (SIH template)</li>
+      <li>Tech stack and datasets</li>
+      <li>Going live: hosting the backend and frontend</li>
+      <li>Judge Q&amp;A preparation, limitations and future scope</li>
+    </ol>
+    <span class="small muted">All diagrams are also saved as separate 1600×900 (16:9) PNG files in <code>docs/diagrams/</code> and screenshots in <code>docs/screenshots/</code> for direct use in PowerPoint.</span>
+  </div>
+</div>
+
+<!-- 1 -->
+<div class="section">
+<h2>1 · What the prototype does</h2>
+<p class="lead">It turns raw satellite imagery of the North Indian Ocean into early, explained and actionable cyclone guidance: it <b>finds</b> cyclonic systems in the whole-basin image, <b>classifies</b> their intensity on IMD's scale, <b>warns</b> of genesis and rapid intensification, <b>predicts</b> track and intensity with a calibrated uncertainty cone, and <b>converts</b> the forecast into landfall, exposure and district-level alerts in the Common Alerting Protocol (CAP) format.</p>
+
+<h3>The problem it addresses</h3>
+<ul>
+  <li><b>Open ocean has almost no ground observations</b> — satellites are the main source of truth for storms over the Bay of Bengal and Arabian Sea.</li>
+  <li><b>Rapid intensification (RI)</b> — winds rising ≥30 kt in 24 h — is the hardest forecast problem and leaves the least time for evacuation (Ockhi 2017, Biparjoy 2023). RI is rare (≈1 in 15 observations), so naive models ignore it.</li>
+  <li><b>Data scarcity:</b> the North Indian Ocean has far fewer historical storms than the Pacific, which limits machine learning.</li>
+  <li><b>Uncertainty is rarely communicated:</b> a single forecast line looks precise but misleads decision-makers.</li>
+  <li><b>The last mile:</b> a forecast only saves lives when it reaches the right district and fishing community in their language.</li>
+</ul>
+
+<h3>Capabilities at a glance</h3>
+<table>
+  <tr><th>Capability</th><th>How</th><th>Evidence (held-out data)</th></tr>
+  <tr><td><b>Identification</b> (No cyclone / Cyclone, location)</td><td>ResNet-18 heatmap detector scans the entire 0–30°N, 40–100°E IR + water-vapour scene; detections linked into tracks</td><td>6 of 6 demo storms found 24–42 h before Cyclonic Storm stage; 79–94% of fixes detected</td></tr>
+  <tr><td><b>Classification</b> (IMD D → SuCS)</td><td>EfficientNet-B0 on IR brightness temperature with wind, Dvorak T-number and class heads; Grad-CAM explanation</td><td>Wind error 6.2–7.4 kt MAE on unseen 2016 NIO storms</td></tr>
+  <tr><td><b>Genesis outlook</b></td><td>LightGBM on track history + ERA5 environment</td><td>ROC-AUC 0.89 (2020–25)</td></tr>
+  <tr><td><b>Rapid-intensification warning</b></td><td>Class-weighted, calibrated LightGBM with SHAP reasons</td><td>8 of 8 RI storms of 2020–25 warned; ROC-AUC 0.85</td></tr>
+  <tr><td><b>Track &amp; intensity prediction</b> 6–72 h</td><td>LSTM + Monte-Carlo dropout, cone calibrated to 67%</td><td>Cone coverage 66%; 12–18% better than persistence</td></tr>
+  <tr><td><b>Impact &amp; alerts</b></td><td>50-member ensemble landfall, WorldPop exposure, district staging, sea areas, CAP 1.2 XML, SMS (EN/HI/GU)</td><td>Biparjoy replay: 12 Gujarat districts staged on 13 June 2023</td></tr>
+</table>
+<div class="fig"><img src="../diagrams/01_system_architecture.png"><div class="cap">Figure 1 — System architecture (docs/diagrams/01_system_architecture.png)</div></div>
+</div>
+
+<!-- 2 -->
+<div class="section">
+<h2>2 · How it solves the problem</h2>
+<div class="fig"><img src="../diagrams/02_end_to_end_flow.png"><div class="cap">Figure 2 — From one satellite image to one actionable alert</div></div>
+<ol>
+  <li><b>Satellite scene.</b> Every 3 hours the whole-basin infrared (IR) and water-vapour (WV) image is read. Cold cloud tops = deep convection.</li>
+  <li><b>Identify.</b> The basin detector marks every cyclone or depression centre and links them over time into tracks. A track is "confirmed" after persisting 15 h, which filters most false alarms.</li>
+  <li><b>Classify.</b> A 14°×14° crop around each centre goes to the intensity CNN, which returns three cross-checked estimates — wind speed, Dvorak T-number (converted with the standard Dvorak table) and IMD category — plus a Grad-CAM heat map showing which clouds drove the estimate.</li>
+  <li><b>Warn early.</b> A genesis model estimates whether a young depression will become a Cyclonic Storm within 72 h; the RI model estimates the probability of a ≥30 kt jump in the next 24 h and lists the top reasons (SHAP).</li>
+  <li><b>Predict.</b> The track model forecasts position and intensity at +6/12/24/48/72 h. Monte-Carlo dropout gives a spread which is scaled so that 67% of real positions fall inside the cone — the same convention as operational cones.</li>
+  <li><b>Assess impact.</b> Fifty calibrated forecast members give a landfall probability, most likely country/district and time window; population inside the damaging-wind envelope is counted from WorldPop; fishermen warnings are issued per sea area.</li>
+  <li><b>Alert.</b> Coastal districts are staged Watch / Alert / Warning and coloured Yellow / Orange / Red; a CAP 1.2 XML alert (the format NDMA's SACHET system ingests) and short SMS texts in English, Hindi and Gujarati are generated.</li>
+</ol>
+<div class="box good"><b>Key design principle — replayable, no look-ahead.</b> Every screen uses only data available at the selected time, so any storm since 1990 can be replayed and compared with "what actually happened". This is how the prototype proves it works rather than just showing a dashboard.</div>
+</div>
+
+<!-- 3 -->
+<div class="section">
+<h2>3 · How the prototype shows it — the screens</h2>
+<h3>Operations console (single screen)</h3>
+<div class="fig"><img src="../screenshots/01_operations_ri_warning.png"><div class="cap">Biparjoy, 6 June 2023 00 UTC: still a 25 kt Depression, RI warning at 3.5× normal risk — it then gained 45 kt in 24 h.</div></div>
+<p><b>Left:</b> current state, RI gauge with reasons, genesis outlook. <b>Centre:</b> map with observed track, AI forecast, 67% cone, actual future track (toggle), landfall members, sea areas, district alerts; chart strip (intensity or RI timeline). <b>Right:</b> forecast &amp; backtest table, landfall/exposure/fishermen, district alerts with CAP-XML, SMS and Bulletin buttons.</p>
+<div class="fig"><img src="../screenshots/02_operations_alerts.png"><div class="cap">Biparjoy, 13 June 2023: 12 Gujarat districts staged, 66% landfall probability, 21.4 M people in the gale zone.</div></div>
+</div>
+
+<div class="section">
+<h3>Basin scan — identification from raw imagery</h3>
+<div class="fig"><img src="../screenshots/03_basin_scan_ockhi.png"><div class="cap">Ockhi 2017: the enhanced IR image of the whole basin; red/yellow dots are detections, blue lines automatic tracks, dashed line the best track (truth).</div></div>
+<h3>Satellite analysis — explained intensity</h3>
+<div class="fig"><img src="../screenshots/05_satellite_vardah.png"><div class="cap">Vardah 2016 (never seen in training): Grad-CAM, CNN wind vs Dvorak T-number vs IMD class, scene type, whole-storm backtest.</div></div>
+</div>
+
+<div class="section">
+<h3>Basin scan — a Super Cyclonic Storm</h3>
+<div class="fig"><img src="../screenshots/04_basin_scan_amphan.png"><div class="cap">Amphan 2020 in the Bay of Bengal: detected in 92% of fixes, 30 h before Cyclonic Storm stage.</div></div>
+<h3>Validation — every number on held-out data</h3>
+<div class="fig"><img src="../screenshots/06_validation.png"><div class="cap">The Validation page lists all metrics, including the negative results (see section 5).</div></div>
+</div>
+
+<!-- 4 -->
+<div class="section">
+<h2>4 · How it matches the problem statement's expectations</h2>
+<p>The PS asks for an AI/ML system for <b>identification, classification and prediction</b> of tropical cyclone patterns using <b>multi-source satellite data</b>. The table maps every item of the team's implementation plan to what was built.</p>
+<table>
+  <tr><th style="width:30%">PS / plan expectation</th><th>What the prototype does</th><th style="width:17%">Where to see it</th><th style="width:9%">Status</th></tr>
+  <tr><td>Identification of cyclones from satellite images</td><td>Whole-basin detector finds every system and tracks it; 24–42 h before Cyclonic Storm stage on 6 demo storms</td><td>Basin scan</td><td><span class="tag t-done">Done</span></td></tr>
+  <tr><td>Label images No Cyclone / Cyclone</td><td>Detector trained on storm scenes plus storm-free scenes (negatives); classes cyclone (≥34 kt) and depression (17–33 kt)</td><td>Basin scan, Validation §5</td><td><span class="tag t-done">Done</span></td></tr>
+  <tr><td>Classify cyclone intensity (IMD categories)</td><td>CNN wind + Dvorak T-number + IMD class (D, DD, CS, SCS, VSCS, ESCS, SuCS), three views cross-checked</td><td>Satellite, Basin scan</td><td><span class="tag t-done">Done</span></td></tr>
+  <tr><td>Multi-source satellite data</td><td>IR + water vapour (GridSat-B1), IR + WV + passive microwave (TCIR), INSAT-3D external test; plus IBTrACS, ERA5, WorldPop</td><td>Validation §6</td><td><span class="tag t-done">Done</span></td></tr>
+  <tr><td>Match satellite images with IBTrACS by time + location</td><td>Every TCIR/GridSat frame matched to the IBTrACS storm (e.g. TCIR 201605I → Vardah)</td><td>Satellite</td><td><span class="tag t-done">Done</span></td></tr>
+  <tr><td>Focus on Arabian Sea and Bay of Bengal</td><td>Scene box 0–30°N, 40–100°E; NIO-specific fine-tuning; Arabian-Sea flag in models</td><td>All pages</td><td><span class="tag t-done">Done</span></td></tr>
+  <tr><td>CNN / EfficientNet for detection &amp; classification</td><td>EfficientNet-B0 intensity model; ResNet-18 basin detector</td><td>Satellite, Basin scan</td><td><span class="tag t-done">Done</span></td></tr>
+  <tr><td>LSTM / ConvLSTM to predict movement and intensity (6–24 h)</td><td>LSTM track + intensity to 72 h with calibrated cone; ConvLSTM on 8 satellite frames for 24 h change</td><td>Operations</td><td><span class="tag t-done">Done</span></td></tr>
+  <tr><td>Input latest image → location, category, wind speed, predicted path</td><td>Basin scan gives location, category and wind from the image alone; the path forecast uses the track history of that system</td><td>Basin scan + Operations</td><td><span class="tag t-part">Partly</span></td></tr>
+  <tr><td>INSAT-3D/3DR/3DS from MOSDAC</td><td>INSAT-3D images (MOSDAC-sourced, Kaggle) used as an external test; live MOSDAC ingest is designed but pending account approval. Training used GridSat/TCIR geostationary IR (same physical channel)</td><td>Satellite upload, Validation §1</td><td><span class="tag t-part">Partly</span></td></tr>
+  <tr><td>Dashboard: React + FastAPI + map</td><td>Next.js (React 19) + FastAPI + Mapbox; single-screen console</td><td>All pages</td><td><span class="tag t-done">Done</span></td></tr>
+  <tr><td>Display satellite image, cyclone info, predicted trajectory</td><td>Basin IR overlay, Satellite page, cyclone state card, forecast track + cone</td><td>All pages</td><td><span class="tag t-done">Done</span></td></tr>
+</table>
+<div class="box"><b>Beyond the PS:</b> genesis outlook, rapid-intensification warning with reasons, calibrated uncertainty, landfall window, population exposure, fishermen sea-area warnings, CAP 1.2 alerts and multilingual SMS — the pieces an RSMC forecaster, SDMA officer or district collector actually acts on.</div>
+</div>
+
+<!-- 5 -->
+<div class="section">
+<h2>5 · Results and success rates</h2>
+<p>Cyclone models are not judged by a single "accuracy %". Each is measured the way forecasters measure it, on storms or seasons the model never saw during training.</p>
+<div class="fig"><img src="../diagrams/04_results.png"><div class="cap">Figure 3 — Results at a glance</div></div>
+<table>
+  <tr><th style="width:22%">Model</th><th style="width:22%">Test set</th><th>Result</th><th style="width:25%">In plain words</th></tr>
+  <tr><td>Intensity CNN (IR)</td><td>5 NIO storms of 2016, 229 frames</td><td>MAE 7.4 kt, RMSE 10.3 kt; IMD class accuracy 55%; T-number error 0.47</td><td>Wind within ~7 kt on average; class often off by one neighbouring category</td></tr>
+  <tr><td>Cross-basin transfer</td><td>same</td><td>MAE 8.7 → 7.4 kt (<b>+14.9%</b>)</td><td>Learning from other oceans helps India's data-scarce basin</td></tr>
+  <tr><td>Multi-channel CNN</td><td>same</td><td>MAE 6.2–6.5 kt; extra channels change error by ≈0.1 kt</td><td>Better training; IR carries almost all the signal</td></tr>
+  <tr><td>INSAT-3D external test</td><td>132 labelled INSAT-3D images</td><td>20.2 kt raw → 15.1 kt after calibration</td><td>Different image processing = domain shift; retrain on native MOSDAC data</td></tr>
+  <tr><td>Basin detector</td><td>189 scenes 2017–24</td><td>Precision 57%, recall 51% (all systems ≥17 kt), centre error 69 km</td><td>Finds most systems; weak depressions are hardest</td></tr>
+  <tr><td>Image-only pipeline</td><td>6 demo storms</td><td>Detected 24–42 h before CS stage; 79–94% of fixes; 41–85 km; 14 real vs 6 false confirmed tracks</td><td>Spots storms 1–2 days before they are cyclones</td></tr>
+  <tr><td>RI early warning</td><td>2020–25, 436 fixes, 45 RI</td><td>ROC-AUC 0.85, PR-AUC 0.44 (base rate 0.10), recall 62%, precision 36%; 8/8 RI storms flagged, 7/19 non-RI storms also flagged</td><td>Catches every RI storm, at a cost of some false alarms</td></tr>
+  <tr><td>Genesis</td><td>2020–25</td><td>ROC-AUC 0.89; 0.76 from a system's first fix</td><td>Good at telling which depressions will become cyclones</td></tr>
+  <tr><td>Track + cone</td><td>2020–25, 571 forecasts</td><td>140 / 300 / 447 km at 24 / 48 / 72 h; 12–18% better than persistence; cone coverage 66% (target 67%)</td><td>Honest cone; track ≈2× IMD operational error</td></tr>
+  <tr><td>ConvLSTM sequence</td><td>All-basin validation</td><td>24 h change MAE 13.3 vs 13.9 kt without images; RI PR-AUC 0.30 vs 0.42 without images</td><td>Images did not help RI → shown as experimental</td></tr>
+</table>
+<div class="box warn"><b>How to talk about "success rate" in front of judges.</b> Lead with the three strongest, verifiable numbers: <b>identified 24–42 h before cyclone stage</b> (6/6 storms), <b>8 of 8 rapid-intensification storms warned</b> (2020–25), and a <b>calibrated uncertainty cone (66% vs 67% target)</b>. Then state the limits yourself before a judge asks: track error ≈2× IMD's, detector recall 51% for weak depressions, INSAT domain shift. Never quote a single "accuracy %".</div>
+</div>
+
+<!-- 6 -->
+<div class="section">
+<h2>6 · What we built differently</h2>
+<div class="fig"><img src="../diagrams/05_differentiation.png"><div class="cap">Figure 4 — Compared with the common PS 26070 pattern</div></div>
+<ul>
+  <li><b>Starts before the storm exists:</b> basin-wide detection and a genesis probability, not a classifier that needs a pre-cropped storm image.</li>
+  <li><b>Targets the hardest sub-problem:</b> a dedicated, imbalance-aware rapid-intensification warning with human-readable reasons.</li>
+  <li><b>Operationally grounded intensity:</b> Dvorak T-number and IMD category alongside the CNN wind, with Grad-CAM.</li>
+  <li><b>Honest uncertainty:</b> the cone is calibrated and its coverage is measured.</li>
+  <li><b>Data scarcity addressed:</b> cross-basin transfer learning, measured +14.9%.</li>
+  <li><b>Closes the loop:</b> landfall, exposure, fishermen warnings, CAP 1.2 XML and multilingual SMS.</li>
+  <li><b>Proof, not just a demo:</b> replay any storm since 1990 against what actually happened; negative results published.</li>
+</ul>
+<div class="box small"><b>Careful wording:</b> say "not seen in the public PS 26070 prototypes we reviewed" rather than "no one else does this".</div>
+<div class="fig"><img src="../diagrams/07_users_decisions.png"><div class="cap">Figure 5 — Users and the decision each screen supports</div></div>
+</div>
+
+<!-- 7 -->
+<div class="section">
+<h2>7 · Demo walkthrough (click path)</h2>
+<p>Start the app with <code>.\run_dev.ps1</code> (or open the deployed URL). Deep links jump straight to each moment — replace <code>localhost:3000</code> with the deployed address when live.</p>
+<table>
+  <tr><th style="width:5%">#</th><th style="width:33%">Open</th><th>What to do</th><th style="width:30%">What to point out</th></tr>
+  <tr><td>1</td><td><code>localhost:3000/basin?storm=OCKHI</code></td><td>Press ▶ play; click a red/yellow detection</td><td>Detected from raw imagery; "How early" card: 36 h before CS stage; false alarms shown</td></tr>
+  <tr><td>2</td><td><code>localhost:3000/basin?storm=AMPHAN</code></td><td>Drag the slider to the peak</td><td>Image-only intensity (blue) follows best track (grey); Super Cyclonic Storm</td></tr>
+  <tr><td>3</td><td><code>localhost:3000/satellite</code></td><td>Toggle IR / Grad-CAM; move the frame slider</td><td>Three intensity views agree; Dvorak T-number; ConvLSTM outlook</td></tr>
+  <tr><td>4</td><td><code>localhost:3000/?storm=BIPARJOY&amp;time=2023-06-06T00:00</code></td><td>Point to RI gauge, then "Actual: +45 kt"</td><td>RI warned while still a 25 kt Depression; SHAP reasons; genesis 96%</td></tr>
+  <tr><td>5</td><td>same page</td><td>Toggle "What actually happened"; switch chart to RI timeline</td><td>Cone vs real track; red bars = RI actually happened</td></tr>
+  <tr><td>6</td><td><code>localhost:3000/?storm=BIPARJOY&amp;time=2023-06-13T00:00</code></td><td>Open CAP-XML, then SMS, then Bulletin</td><td>12 districts; landfall 66%; 21 M exposed; CAP 1.2; Hindi/Gujarati SMS segments</td></tr>
+  <tr><td>7</td><td><code>localhost:3000/validation</code></td><td>Scroll sections 1–8</td><td>All held-out; negative results included</td></tr>
+  <tr><td>8</td><td><code>localhost:8000/docs</code></td><td>Try <code>/api/storms</code> live</td><td>Real API, not hard-coded; every prediction logged</td></tr>
+</table>
+<div class="box"><b>Other good storms to replay:</b> Mocha 2023, Amphan 2020, Tauktae 2021 (search box in the storm menu), and on Basin scan: Fani 2019, Tauktae 2021, Dana 2024, Vardah 2016.</div>
+<div class="box warn"><b>Before any live demo:</b> open every page once to warm the caches (first basin scan of a storm takes 20–40 s on CPU; afterwards it is instant). Keep a recorded video as backup.</div>
+</div>
+
+<!-- 8 -->
+<div class="section">
+<h2>8 · 5-minute video: timeline, screens and voice-over</h2>
+<div class="fig"><img src="../diagrams/09_video_timeline.png"><div class="cap">Figure 6 — Video timeline (≈650 words of narration at a calm 130 words/minute)</div></div>
+<table class="vo">
+  <tr><th>Time</th><th>Screen / link</th><th>On-screen action</th><th>Voice-over</th></tr>
+  <tr><td>0:00–0:30<br>Hook</td><td>Operations — <span class="mono">?storm=BIPARJOY&amp;time=2023-06-06T00:00</span></td><td>Slow zoom on the 25 kt Depression, then the "Actual +45 kt" line</td><td>"In June 2023, Cyclone Biparjoy sat in the Arabian Sea as a weak depression. Within 24 hours its winds jumped by forty-five knots. Rapid intensification like this is the hardest problem in cyclone forecasting — and it leaves coastal districts the least time to act. We are Team NerveAi, and this is our AI system for Problem Statement 26070 from the Ministry of Earth Sciences and IMD."</td></tr>
+  <tr><td>0:30–1:00<br>Problem &amp; gap</td><td>Diagram 02 (end-to-end flow) or About page</td><td>Reveal the 7 steps one by one</td><td>"Most AI cyclone projects classify a storm once it already exists and draw one track line. Forecasters need more: to spot systems early, to know when a storm will suddenly strengthen, to see how uncertain the forecast is — and to deliver it in the format disaster managers already use. Our prototype does all of this from multi-source satellite data."</td></tr>
+  <tr><td>1:00–1:50<br>Identify</td><td>Basin scan — <span class="mono">/basin?storm=OCKHI</span></td><td>Press ▶; pause when the first detection appears; point to the "How early" card</td><td>"This is the raw infrared and water-vapour image of the entire North Indian Ocean, every three hours. No track data goes in. Our detector finds every system, links detections into tracks and estimates intensity from the image alone. For Cyclone Ockhi in 2017, the system identified the depression thirty-six hours before it became a cyclonic storm. Across six demo storms, identification came twenty-four to forty-two hours before cyclone stage — and we show the false alarms too."</td></tr>
+  <tr><td>1:50–2:30<br>Classify</td><td>Satellite — <span class="mono">/satellite</span> (Vardah)</td><td>Toggle IR → Grad-CAM; hover the three class views</td><td>"For intensity, a CNN trained with cross-basin transfer learning reads the infrared image and gives three independent estimates: a wind speed, a Dvorak T-number mapped through the standard Dvorak table, and an IMD category. When they agree, confidence is higher. Grad-CAM shows which clouds drove the estimate. On storms it never saw, the average error is about seven knots."</td></tr>
+  <tr><td>2:30–3:30<br>Warn &amp; predict</td><td>Operations — back to 6 June; switch chart to "RI timeline"; press ▶ for a few steps</td><td>Point to RI gauge and reasons, the cone, the dashed actual track and the genesis card</td><td>"Back to Biparjoy on the sixth of June. The system gives a nineteen percent chance of rapid intensification — three and a half times the normal risk — and explains why: the strengthening in the last twelve and twenty-four hours. What actually happened: plus forty-five knots. On the 2020 to 2025 test seasons it warned for all eight rapidly intensifying storms. The track forecast comes with a calibrated uncertainty cone — real positions fell inside it sixty-six percent of the time, against a sixty-seven percent target — and a genesis model estimates whether a depression will become a cyclone at all."</td></tr>
+  <tr><td>3:30–4:10<br>Impact &amp; alerts</td><td>Operations — <span class="mono">?storm=BIPARJOY&amp;time=2023-06-13T00:00</span></td><td>Point to landfall card and district list; click CAP-XML, then SMS</td><td>"A week later, the forecast becomes decisions: a landfall probability and time window, twenty-one million people inside the damaging-wind zone, fishermen warnings for each sea area, and red, orange and yellow alerts for twelve Gujarat districts. One click produces a Common Alerting Protocol message — the format NDMA's SACHET system ingests — and SMS text in English, Hindi and Gujarati."</td></tr>
+  <tr><td>4:10–4:40<br>Validation</td><td>Validation — <span class="mono">/validation</span></td><td>Scroll slowly from the headline stats to section 8</td><td>"Every number is measured on storms and seasons the models never saw. We also publish what did not work: our track error is about twice IMD's operational forecasts, and satellite image sequences did not improve rapid-intensification warnings — so we kept the model that did."</td></tr>
+  <tr><td>4:40–5:00<br>Close</td><td>Operations overview or Diagram 01</td><td>Hold on the full console</td><td>"From a raw satellite image to a district alert — identification, classification and prediction in one decision-support tool, built on open data and designed to take IMD's INSAT imagery next. Thank you."</td></tr>
+</table>
+<div class="box small"><b>Recording tips:</b> 1600×900 window, 100% zoom, light theme; OBS Studio or Xbox Game Bar (Win+G); record each segment separately and join; add captions for the numbers; keep the cursor slow; say "decision support", never "replaces IMD".</div>
+</div>
+
+<!-- 9 -->
+<div class="section">
+<h2>9 · PPT content, slide by slide (SIH template)</h2>
+<p>Your template has six slides. Replace the placeholder text as below. Diagrams are 16:9 PNGs: on a 16:9 slide, insert under the title and set width ≈ 12.3" (31 cm); on a 4:3 slide, width ≈ 9.3".</p>
+
+<div class="slide"><div class="sh">Slide 1 — Title page</div>
+<ul><li>Problem Statement ID – <b>26070</b></li><li>Problem Statement Title – <b>AI/ML based system for identification, classification and prediction of different tropical cyclone patterns using multi-source satellite data</b></li><li>Theme – <b>Disaster Management</b> · PS Category – <b>Software</b></li><li>Team ID – (fill) · Team Name – NerveAi</li></ul></div>
+
+<div class="slide"><div class="sh">Slide 2 — Idea title: "CycloneSense — from satellite pixel to district alert" (suggested) · Proposed solution</div>
+<ul>
+<li><b>Identify early:</b> AI scans the whole Bay of Bengal and Arabian Sea satellite image every 3 h and finds cyclonic systems 24–42 h before they become cyclones.</li>
+<li><b>Classify with reasons:</b> CNN estimates wind, Dvorak T-number and IMD category from IR imagery, with Grad-CAM showing which clouds drove the call.</li>
+<li><b>Warn &amp; predict:</b> rapid-intensification and genesis probabilities with explanations; 72 h track and intensity with a calibrated uncertainty cone.</li>
+<li><b>Act:</b> landfall window, people exposed, fishermen sea-area warnings and district alerts as CAP 1.2 XML and multilingual SMS.</li>
+<li><b>Innovation &amp; uniqueness:</b> basin-wide identification + imbalance-aware RI warning + calibrated cone + cross-basin transfer learning (+14.9%) + alert-ready output, all replayable against real storms.</li>
+</ul>
+<span class="small muted">Optional image: docs/diagrams/02_end_to_end_flow.png (small, right side) or a dashboard screenshot.</span></div>
+
+<div class="slide"><div class="sh">Slide 3 — Technical approach</div>
+<ul>
+<li><b>Technologies:</b> Python · PyTorch · timm (EfficientNet-B0, ResNet-18) · LightGBM · SHAP · xarray; FastAPI · SQLite · Docker; Next.js (React) · TypeScript · Tailwind · Mapbox GL · Recharts; Google Colab T4 GPU for training; Hugging Face Spaces + Vercel for hosting.</li>
+<li><b>Data:</b> GridSat-B1 IR/WV, TCIR IR/WV/microwave, INSAT-3D (MOSDAC), IBTrACS, ERA5, WorldPop.</li>
+<li><b>Methodology:</b> storm-centred crops → IBTrACS matching → IMD/Dvorak labels → storm/year splits → six models → decision layer → API → dashboard.</li>
+</ul>
+<span class="small"><b>Diagram:</b> docs/diagrams/01_system_architecture.png (full width). If allowed a 2nd technical slide: 03_training_validation.png or a dashboard screenshot as "working prototype".</span></div>
+
+<div class="slide"><div class="sh">Slide 4 — Feasibility and viability</div>
+<ol>
+<li><b>Feasibility:</b> working prototype already built on free, open data (NOAA, Copernicus, WorldPop, MOSDAC); trains on a free Colab GPU in ≈1.5 h; runs on a laptop CPU; Docker image deploys to free cloud tiers.</li>
+<li><b>Challenges &amp; risks:</b> track skill below numerical weather models; sensor/processing shift between training data and INSAT; missing satellite channels; rare extreme storms; false alarms.</li>
+<li><b>Mitigation:</b> position as decision support with calibrated cone and replay; calibration and retraining on native MOSDAC data; channel-dropout training with IR-only fallback; cross-basin pretraining; thresholds tuned on validation years and 15 h track confirmation.</li>
+</ol>
+<span class="small"><b>Diagram:</b> docs/diagrams/08_risks_mitigation.png</span></div>
+
+<div class="slide"><div class="sh">Slide 5 — Impact and benefits</div>
+<ol>
+<li><b>Potential impact:</b> RSMC forecasters get earlier identification and RI warnings; SDMA/NDRF get landfall windows and exposure for pre-positioning; district collectors get staged, colour-coded alerts; fisherfolk get sea-area warnings in their language.</li>
+<li><b>Benefits — Social:</b> more lead time for evacuation ("Mission Zero Casualty"). <b>Economic:</b> better-targeted evacuations and fishing bans reduce losses and alert fatigue. <b>Operational:</b> standard CAP output plugs into existing alerting pipelines. <b>Regional:</b> scalable to the RSMC New Delhi area (Bangladesh, Myanmar, Sri Lanka, Pakistan, Oman).</li>
+</ol>
+<span class="small"><b>Diagram:</b> docs/diagrams/07_users_decisions.png</span></div>
+
+<div class="slide"><div class="sh">Slide 6 — Research and references</div>
+<ol class="small">
+<li>Chen, B., Chen, B.-F., Lin, H.-T. (2018). Rotation-blended CNNs on a new open dataset for tropical cyclone image-to-intensity regression (TCIR). <i>ACM KDD</i>.</li>
+<li>Knapp, K. R. et al. (2010). The International Best Track Archive for Climate Stewardship (IBTrACS). <i>Bull. Amer. Meteor. Soc.</i></li>
+<li>Knapp, K. R. et al. (2011). Globally gridded satellite observations for climate studies (GridSat). <i>Bull. Amer. Meteor. Soc.</i></li>
+<li>Dvorak, V. F. (1975). Tropical cyclone intensity analysis and forecasting from satellite imagery. <i>Mon. Wea. Rev.</i>; Olander &amp; Velden (2019). The Advanced Dvorak Technique (ADT) update. <i>Wea. Forecasting.</i></li>
+<li>Kaplan, J. &amp; DeMaria, M. (2003). Large-scale characteristics of rapidly intensifying tropical cyclones. <i>Wea. Forecasting</i> (RI definition).</li>
+<li>Hersbach, H. et al. (2020). The ERA5 global reanalysis. <i>Q. J. R. Meteorol. Soc.</i></li>
+<li>Tan &amp; Le (2019) EfficientNet, <i>ICML</i>; Shi et al. (2015) ConvLSTM, <i>NeurIPS</i>; Zhou et al. (2019) Objects as Points (CenterNet); Ke et al. (2017) LightGBM, <i>NeurIPS</i>; Lundberg &amp; Lee (2017) SHAP, <i>NeurIPS</i>; Selvaraju et al. (2017) Grad-CAM, <i>ICCV</i>.</li>
+<li>OASIS (2010). Common Alerting Protocol v1.2; NDMA SACHET; IMD RSMC New Delhi cyclone classification; WorldPop (2020) population counts.</li>
+</ol>
+<span class="small muted">Tip: add one line per reference saying how you used it, e.g. "TCIR — training data for the intensity CNN".</span></div>
+</div>
+
+<!-- 10 -->
+<div class="section">
+<h2>10 · Tech stack and datasets</h2>
+<h3>Tech stack</h3>
+<table>
+  <tr><th style="width:20%">Layer</th><th>Technology</th><th style="width:30%">Why</th></tr>
+  <tr><td>ML / training</td><td>Python 3.13, PyTorch 2.14, timm (EfficientNet-B0, ResNet-18), LightGBM 4.7, scikit-learn, SHAP</td><td>Proven CV backbones; fast, explainable tabular models</td></tr>
+  <tr><td>Geo / data</td><td>xarray, netCDF4, h5py, pandas, pyarrow, rasterio, shapely, cdsapi, kaggle</td><td>Read satellite HDF5/NetCDF, reanalysis and GIS data</td></tr>
+  <tr><td>Training compute</td><td>Google Colab T4 GPU (≈1.5 h total); laptop CPU for tabular models</td><td>Free, reproducible notebooks in <code>notebooks/</code></td></tr>
+  <tr><td>Backend</td><td>FastAPI, Uvicorn, SQLite audit log, optional Gemini API (guard-railed)</td><td>Async, auto-generated API docs at /docs</td></tr>
+  <tr><td>Frontend</td><td>Next.js 16 (React 19), TypeScript, Tailwind CSS 4, Mapbox GL JS 3, Recharts 3, lucide icons</td><td>Fast single-screen console, neumorphic UI, light/dark</td></tr>
+  <tr><td>Deployment</td><td>Docker, Hugging Face Spaces (backend), Vercel (frontend), GitHub</td><td>Free tiers; one-command local run</td></tr>
+</table>
+<h3>Datasets</h3>
+<table>
+  <tr><th style="width:18%">Dataset</th><th style="width:17%">Source</th><th>Content</th><th style="width:24%">Used for</th></tr>
+  <tr><td>TCIR (CPAC + IO + SH)</td><td>Chen et al. 2018; Kaggle mirror</td><td>≈23,000 storm-centred frames 2003–16, 201×201 at 0.07°, IR / WV / VIS / microwave, 3-hourly, intensity labels</td><td>Intensity CNN, multi-channel model, ConvLSTM</td></tr>
+  <tr><td>GridSat-B1</td><td>NOAA NCEI</td><td>Global geostationary IR + WV, 3-hourly, 0.07°; ≈1,000 scenes subset to the NIO box</td><td>Basin detector, demo scenes</td></tr>
+  <tr><td>INSAT-3D cyclone images</td><td>Kaggle (sshubam), MOSDAC-sourced</td><td>136 labelled IR images, 2013–21</td><td>External test, upload demo</td></tr>
+  <tr><td>IBTrACS v04r01 (NI)</td><td>NOAA NCEI</td><td>450 storms 1982–2025: track, JTWC and IMD winds, pressure</td><td>Labels, RI, genesis, track, backtests</td></tr>
+  <tr><td>ERA5 monthly means</td><td>Copernicus CDS</td><td>SST, 200/850 hPa winds (shear), 600 hPa humidity, 1982–2025</td><td>RI and genesis environment</td></tr>
+  <tr><td>WorldPop 2020 (1 km)</td><td>WorldPop</td><td>Population of India, Bangladesh, Myanmar, Sri Lanka, Pakistan</td><td>Exposure</td></tr>
+  <tr><td>Natural Earth 10 m land</td><td>Natural Earth</td><td>Coastline / land mask</td><td>Landfall detection</td></tr>
+</table>
+<div class="fig"><img src="../diagrams/03_training_validation.png"><div class="cap">Figure 7 — Training and validation splits (no leakage)</div></div>
+</div>
+
+<!-- 11 -->
+<div class="section">
+<h2>11 · Going live: hosting the prototype</h2>
+<div class="fig"><img src="../diagrams/06_deployment.png"><div class="cap">Figure 8 — Deployment architecture</div></div>
+<div class="box bad"><b>First — security.</b> Several keys were shared in chat during development. Before making anything public, regenerate: Kaggle token, Gemini API key, Copernicus CDS key, Mapbox token, and change the NASA Earthdata password. Never commit <code>.env</code> (it is already in <code>.gitignore</code> and <code>.dockerignore</code>).</div>
+
+<h3>A · Backend on Hugging Face Spaces (free: 2 vCPU, 16 GB RAM)</h3>
+<ol>
+<li>Create an account at huggingface.co → <b>New Space</b> → SDK: <b>Docker</b> → template: Blank → hardware: <b>CPU basic (free)</b> → visibility Public or Private.</li>
+<li>Install Git LFS (git-lfs.com), then clone the Space and copy the backend files into it:
+<pre>git clone https://huggingface.co/spaces/&lt;user&gt;/cyclone-api
+cd cyclone-api
+git lfs install
+git lfs track "*.pt" "*.npz" "*.parquet" "*.nc" "*.npy" "*.db"
+# copy from the project folder: Dockerfile, .dockerignore, ml/, backend/,
+# models/weights/ (skip *_last.pt and MC_*_best.pt), data/processed/, data/raw/era5/
+git add . &amp;&amp; git commit -m "Cyclone API" &amp;&amp; git push</pre></li>
+<li>In the Space → <b>Settings → Variables and secrets</b>: add secret <code>GEMINI_API_KEY</code> (optional) and variable <code>CORS_ORIGINS</code> = your Vercel URL, e.g. <code>https://cyclone-dss.vercel.app</code>.</li>
+<li>Wait for the build (≈10–15 min the first time). Test <code>https://&lt;user&gt;-cyclone-api.hf.space/api/health</code> and <code>/docs</code>.</li>
+<li>Free Spaces sleep after inactivity: open the URL a few minutes before a demo.</li>
+</ol>
+
+<h3>B · Frontend on Vercel (free)</h3>
+<ol>
+<li>Push the project to a GitHub repository (the <code>frontend/</code> folder is enough; model weights are not needed by the frontend).</li>
+<li>vercel.com → <b>Add New → Project</b> → import the repo → <b>Root Directory: <code>frontend</code></b> (framework auto-detected as Next.js).</li>
+<li>Environment variables: <code>NEXT_PUBLIC_API_URL</code> = the Space URL (no trailing slash); <code>NEXT_PUBLIC_MAPBOX_TOKEN</code> = your public Mapbox token.</li>
+<li>Deploy. In Mapbox account → Tokens, restrict the token's URLs to your Vercel domain.</li>
+<li>Every <code>git push</code> redeploys automatically.</li>
+</ol>
+
+<h3>C · Test the image locally first (optional)</h3>
+<pre>docker build -t cyclone-api .
+docker run -p 7860:7860 -e CORS_ORIGINS=http://localhost:3000 -e GEMINI_API_KEY=... cyclone-api
+# then set frontend/.env.local NEXT_PUBLIC_API_URL=http://localhost:7860</pre>
+
+<h3>D · Alternatives</h3>
+<table>
+  <tr><th>Option</th><th>Cost</th><th>Notes</th></tr>
+  <tr><td>Hugging Face Spaces (recommended)</td><td>Free</td><td>16 GB RAM fits PyTorch + models; sleeps when idle</td></tr>
+  <tr><td>Google Cloud Run</td><td>Free tier, then pay per use</td><td>Scale to zero; set memory 2–4 GB; deploy the same Dockerfile</td></tr>
+  <tr><td>Railway / Render</td><td>≈$5–7 / month</td><td>Need ≥2 GB RAM; free 512 MB tiers are too small for PyTorch</td></tr>
+  <tr><td>Own laptop + hotspot</td><td>Free</td><td><code>run_dev.ps1</code>; dashboard reachable on the LAN IP; best fallback for the finale</td></tr>
+</table>
+
+<h3>E · Post-deployment checklist</h3>
+<ul>
+<li>/api/health shows 4 core models; /api/basin/storms shows 6 demo storms.</li>
+<li>Dashboard loads all five pages; map tiles appear (Mapbox token + URL restriction correct).</li>
+<li>No CORS errors in the browser console (CORS_ORIGINS matches the Vercel URL exactly).</li>
+<li>Warm the basin scans once (open each demo storm) so the judges see instant results.</li>
+<li>Keep the local setup and a recorded video as backups.</li>
+</ul>
+</div>
+
+<!-- 12 -->
+<div class="section">
+<h2>12 · Judge Q&amp;A preparation</h2>
+<table>
+  <tr><th style="width:30%">Likely question</th><th>Suggested answer</th></tr>
+  <tr><td>"What is your accuracy?"</td><td>"We measure each task the way forecasters do, on storms the models never saw: wind error about 7 knots, rapid-intensification warning caught all 8 RI storms of 2020–25, storms identified 24–42 hours before cyclone stage, and a cone that holds 66% of real positions against a 67% target."</td></tr>
+  <tr><td>"Is your track better than IMD's?"</td><td>"No — about twice IMD's operational error, because we use track history only, without numerical weather model steering winds. It is decision support; adding GFS steering flow is our next step."</td></tr>
+  <tr><td>"Did you use INSAT data?"</td><td>"Yes, 132 labelled INSAT-3D images as an external test. Error rises to about 15 kt after calibration because of different image processing — so production training should use native MOSDAC HDF5, which our pipeline is ready for."</td></tr>
+  <tr><td>"How do you handle class imbalance?"</td><td>"RI is 1 in 15 observations. We use class weighting, calibrate probabilities, choose the threshold on 2017–19 only, and report PR-AUC and false alarms, not accuracy."</td></tr>
+  <tr><td>"How do you prevent data leakage?"</td><td>"All splits are by storm and year. Tabular models: train to 2016, tune 2017–19, test 2020–25. Image models test on 2016+ storms; the detector on 2017–24 scenes."</td></tr>
+  <tr><td>"Is it connected to SACHET?"</td><td>"No. It produces CAP 1.2, the standard SACHET ingests, marked status = Exercise. A pilot with NDMA/C-DOT would be the next step."</td></tr>
+  <tr><td>"What if a satellite channel is missing?"</td><td>"Models are trained with channel dropout. GridSat 2024 has no water vapour: the system switched to IR-only intensity and still detected Cyclone Dana in 80% of fixes."</td></tr>
+  <tr><td>"Why did the image-sequence model not help?"</td><td>"We tested it fairly against the same network without images: better 24-hour change error, worse RI ranking. So the operational RI warning uses the model that performs best, and we report the negative result."</td></tr>
+  <tr><td>"Can it run in real time?"</td><td>"Inference takes about one to three seconds per forecast or scene on a laptop CPU. Real-time operation needs a live INSAT or EUMETSAT feed instead of the GridSat archive; the ingest slot is designed for MOSDAC."</td></tr>
+  <tr><td>"Why use an LLM?"</td><td>"Only to word an optional bulletin from the model's numbers. It is constrained, falls back to a template, and strips any official-agency headers."</td></tr>
+</table>
+
+<h3>Limitations (state them proactively)</h3>
+<ul>
+<li>Decision support only — not an official IMD/NDMA product; CAP status is Exercise.</li>
+<li>Track skill ≈2× IMD operational error; skill falls quickly beyond 48 h.</li>
+<li>Domain shift on INSAT JPEGs; no ESCS/SuCS frames in the satellite test year.</li>
+<li>RI warning also flags some non-RI storms (7 of 19); detector recall is lower for weak depressions.</li>
+<li>District points and gale radii are illustrative approximations.</li>
+</ul>
+<h3>Future scope</h3>
+<ul>
+<li>Live INSAT-3D/3DR/3DS ingest from MOSDAC and retraining on native HDF5.</li>
+<li>GFS/ERA5 steering winds and daily environment fields for track and RI.</li>
+<li>CAP pilot with NDMA/C-DOT SACHET; more languages (Odia, Tamil, Telugu, Bengali, Marathi).</li>
+<li>Extension to the whole RSMC New Delhi area; foundation-model track forecasting; physics-informed augmentation for rare extreme storms.</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>Appendix · Diagrams for the PPT</h2>
+<p class="muted">Each file in <code>docs/diagrams/</code> is 1600×900 px (16:9). Suggested placement: 01 → Slide 3 · 02 → Slide 2 · 03 → Slide 3 (2nd) · 04 → results/Slide 4 · 05 → Slide 2 or 5 · 06 → deployment/Slide 4 · 07 → Slide 5 · 08 → Slide 4 · 09 → video planning.</p>
+<div class="fig"><img src="../diagrams/08_risks_mitigation.png"><div class="cap">08_risks_mitigation.png</div></div>
+<div class="fig"><img src="../diagrams/07_users_decisions.png"><div class="cap">07_users_decisions.png</div></div>
+</div>
+
+</body>
+</html>

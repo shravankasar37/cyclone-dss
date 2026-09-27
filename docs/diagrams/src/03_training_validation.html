@@ -1,0 +1,45 @@
+<!doctype html><html><head><meta charset='utf-8'><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1600px;height:900px;background:#fff;font-family:'Segoe UI',Arial,sans-serif;color:#1d2433;padding:38px 46px;overflow:hidden}
+h1{font-size:40px;font-weight:800;color:#1f3f7a;letter-spacing:-.5px}
+.sub{font-size:21px;color:#5b6679;margin-top:6px}
+.row{display:flex;gap:16px;align-items:stretch}
+.col{flex:1;border-radius:18px;padding:16px 16px 14px;border:2.5px solid;display:flex;flex-direction:column;gap:9px}
+.col h3{font-size:21px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;text-align:center;padding:6px 0;border-radius:10px;color:#fff}
+.box{background:#fff;border-radius:12px;padding:9px 11px;font-size:17px;line-height:1.3;border:1.5px solid #d9dfe8}
+.box b{font-size:17.5px}
+.small{font-size:14.5px;color:#5b6679}
+.arrow{align-self:center;font-size:40px;color:#8a94a6;font-weight:300}
+.c1{border-color:#2f6fd0;background:#f0f5fd}.c1 h3{background:#2f6fd0}
+.c2{border-color:#3a9b5c;background:#effaf3}.c2 h3{background:#3a9b5c}
+.c3{border-color:#e0a100;background:#fffaeb}.c3 h3{background:#d49400}
+.c4{border-color:#e5484d;background:#fff2f2}.c4 h3{background:#e5484d}
+.c5{border-color:#3b82c4;background:#eef6fc}.c5 h3{background:#3b82c4}
+.c6{border-color:#8a5cd6;background:#f6f1fe}.c6 h3{background:#8a5cd6}
+.new{display:inline-block;background:#ff7a1a;color:#fff;font-size:12px;font-weight:800;border-radius:6px;padding:1px 6px;margin-left:4px;vertical-align:2px}
+.foot{position:absolute;bottom:22px;left:46px;right:46px;font-size:15px;color:#7a8597}
+table{border-collapse:collapse;width:100%}
+.arch .col h3{font-size:17px;padding:5px 0}
+.arch .box{font-size:15.5px;padding:7px 10px}
+.arch .box b{font-size:16px}
+.arch .small{font-size:13.5px}
+.tall td{padding-top:17px!important;padding-bottom:17px!important}
+.tall th{padding:14px 12px}
+</style></head><body>
+<h1>Training & validation — built so judges can trust the numbers</h1>
+<div class="sub">Every model is scored on storms or seasons it never saw; splits are by storm and year, never random frames</div>
+<table class="tall" style="margin-top:28px;font-size:19px">
+<tr style="background:#1f3f7a;color:#fff"><th style="padding:12px;text-align:left">Model</th><th style="text-align:left">Training data</th><th style="text-align:left">Tuned on</th><th style="text-align:left">Tested on (never seen)</th><th style="text-align:left">Where trained</th></tr>
+<tr style="background:#f5f7fb"><td style="padding:11px"><b>Intensity CNN</b> + Dvorak head</td><td>TCIR: Pacific & S. Hemisphere (pretrain) → NIO ≤2014</td><td>NIO 2015</td><td><b>NIO 2016</b> (Vardah, Kyant, Nada, Roanu) + 132 INSAT-3D images</td><td>Colab T4 GPU</td></tr>
+<tr><td style="padding:11px"><b>Multi-channel CNN</b> IR/WV/PMW</td><td>same, with random channel dropout</td><td>NIO 2015</td><td><b>NIO 2016</b></td><td>Colab T4 GPU</td></tr>
+<tr style="background:#f5f7fb"><td style="padding:11px"><b>Basin detector</b></td><td>339 GridSat scenes 2005–15 (+ storm-free scenes)</td><td>2016</td><td><b>189 scenes 2017–24</b> + 6 demo storms</td><td>Colab T4 GPU</td></tr>
+<tr><td style="padding:11px"><b>ConvLSTM</b> sequences</td><td>TCIR 8-frame sequences, all basins</td><td>held-out storms</td><td><b>NIO 2016</b> + all-basin validation</td><td>Colab T4 GPU</td></tr>
+<tr style="background:#f5f7fb"><td style="padding:11px"><b>RI early warning</b></td><td>IBTrACS NIO 1982–2016 (15:1 imbalance)</td><td>2017–19</td><td><b>2020–25</b> (Amphan, Tauktae, Mocha, Biparjoy…)</td><td>Laptop CPU</td></tr>
+<tr><td style="padding:11px"><b>Genesis</b></td><td>IBTrACS depressions 1982–2016 + ERA5</td><td>2017–19</td><td><b>2020–25</b></td><td>Laptop CPU</td></tr>
+<tr style="background:#f5f7fb"><td style="padding:11px"><b>Track + cone</b></td><td>IBTrACS NIO 1982–2016</td><td>2017–19 (cone calibrated here)</td><td><b>2020–25</b></td><td>Laptop CPU</td></tr>
+</table>
+<div class="row" style="margin-top:26px;gap:16px">
+ <div class="box" style="flex:1;font-size:18px"><b>Class imbalance</b> handled explicitly: RI is 1 in 15 fixes → class-weighted training + probability calibration; threshold chosen on validation years only.</div>
+ <div class="box" style="flex:1;font-size:18px"><b>Cross-basin transfer</b> for data-scarce NIO: pretraining on other ocean basins cut intensity error by <b>14.9%</b>.</div>
+ <div class="box" style="flex:1;font-size:18px"><b>No look-ahead:</b> environment uses the previous month's ERA5; every replayed forecast uses data up to that time only.</div>
+</div></body></html>

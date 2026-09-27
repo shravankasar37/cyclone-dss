@@ -1,0 +1,53 @@
+<!doctype html><html><head><meta charset='utf-8'><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1600px;height:900px;background:#fff;font-family:'Segoe UI',Arial,sans-serif;color:#1d2433;padding:38px 46px;overflow:hidden}
+h1{font-size:40px;font-weight:800;color:#1f3f7a;letter-spacing:-.5px}
+.sub{font-size:21px;color:#5b6679;margin-top:6px}
+.row{display:flex;gap:16px;align-items:stretch}
+.col{flex:1;border-radius:18px;padding:16px 16px 14px;border:2.5px solid;display:flex;flex-direction:column;gap:9px}
+.col h3{font-size:21px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;text-align:center;padding:6px 0;border-radius:10px;color:#fff}
+.box{background:#fff;border-radius:12px;padding:9px 11px;font-size:17px;line-height:1.3;border:1.5px solid #d9dfe8}
+.box b{font-size:17.5px}
+.small{font-size:14.5px;color:#5b6679}
+.arrow{align-self:center;font-size:40px;color:#8a94a6;font-weight:300}
+.c1{border-color:#2f6fd0;background:#f0f5fd}.c1 h3{background:#2f6fd0}
+.c2{border-color:#3a9b5c;background:#effaf3}.c2 h3{background:#3a9b5c}
+.c3{border-color:#e0a100;background:#fffaeb}.c3 h3{background:#d49400}
+.c4{border-color:#e5484d;background:#fff2f2}.c4 h3{background:#e5484d}
+.c5{border-color:#3b82c4;background:#eef6fc}.c5 h3{background:#3b82c4}
+.c6{border-color:#8a5cd6;background:#f6f1fe}.c6 h3{background:#8a5cd6}
+.new{display:inline-block;background:#ff7a1a;color:#fff;font-size:12px;font-weight:800;border-radius:6px;padding:1px 6px;margin-left:4px;vertical-align:2px}
+.foot{position:absolute;bottom:22px;left:46px;right:46px;font-size:15px;color:#7a8597}
+table{border-collapse:collapse;width:100%}
+.arch .col h3{font-size:17px;padding:5px 0}
+.arch .box{font-size:15.5px;padding:7px 10px}
+.arch .box b{font-size:16px}
+.arch .small{font-size:13.5px}
+.tall td{padding-top:17px!important;padding-bottom:17px!important}
+.tall th{padding:14px 12px}
+</style></head><body>
+<h1>Deployment — how it goes live</h1>
+<div class="sub">Free-tier friendly: static-quality frontend on Vercel, ML backend as a Docker container on Hugging Face Spaces</div>
+<div class="row" style="margin-top:34px;height:560px;gap:22px">
+ <div class="col c6" style="flex:.8"><h3>Users</h3>
+  <div class="box">RSMC forecaster</div><div class="box">SDMA / NDRF</div><div class="box">District collector</div><div class="box">Judges (public link)</div></div>
+ <div class="arrow">➜</div>
+ <div class="col c1"><h3>Vercel</h3>
+  <div class="box"><b>Next.js dashboard</b><br>global CDN, HTTPS</div>
+  <div class="box">Env: NEXT_PUBLIC_API_URL, NEXT_PUBLIC_MAPBOX_TOKEN</div>
+  <div class="box small">auto-deploys on every git push</div></div>
+ <div class="arrow">➜</div>
+ <div class="col c3" style="flex:1.3"><h3>Hugging Face Space (Docker)</h3>
+  <div class="box"><b>FastAPI + PyTorch + LightGBM</b><br>free CPU tier: 2 vCPU · 16 GB RAM</div>
+  <div class="box">Image contains models (≈330 MB) + processed data</div>
+  <div class="box">Secrets: GEMINI_API_KEY · CORS_ORIGINS</div>
+  <div class="box small">port 7860 · /api/health · /docs</div></div>
+ <div class="arrow">➜</div>
+ <div class="col c2"><h3>External services</h3>
+  <div class="box">Mapbox base maps</div><div class="box">Gemini (optional bulletin)</div><div class="box">MOSDAC / GridSat feed (future live ingest)</div></div>
+</div>
+<div class="row" style="margin-top:26px;gap:18px">
+ <div class="box" style="flex:1;font-size:18px"><b>Training path:</b> Google Colab (T4 GPU) → Google Drive → models/weights → Docker image</div>
+ <div class="box" style="flex:1;font-size:18px"><b>Code path:</b> GitHub repo → Vercel (frontend) + HF Space (backend) · alternatives: Render, Railway, Cloud Run</div>
+ <div class="box" style="flex:1;font-size:18px"><b>Local / offline demo:</b> run_dev.ps1 or docker run — works without internet except map tiles</div>
+</div></body></html>

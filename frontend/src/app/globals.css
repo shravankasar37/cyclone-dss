@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+/* ---------- Neumorphic design tokens ---------- */
+:root {
+  --bg: #e3e8ef;
+  --sd: #bcc6d3;          /* shadow (dark side) */
+  --sl: #ffffff;          /* shadow (light side) */
+  --text: #2b3445;
+  --muted: #6a778b;
+  --faint: #95a1b2;
+  --accent: #4a6cf7;
+  --accent-soft: #dbe3ff;
+  --red: #e5484d;
+  --orange: #f2711c;
+  --yellow: #e0a100;
+  --green: #2f9e66;
+  --map-bg: #dfe5ec;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #252a32;
+  --sd: #181b20;
+  --sl: #323843;
+  --text: #e3e8f0;
+  --muted: #9aa6b8;
+  --faint: #6c788a;
+  --accent: #7d97ff;
+  --accent-soft: #2f3a5c;
+  --red: #ff6369;
+  --orange: #ff8b3e;
+  --yellow: #f5c542;
+  --green: #4cc38a;
+  --map-bg: #1f232a;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-ink: var(--text);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-sev-red: var(--red);
+  --color-sev-orange: var(--orange);
+  --color-sev-yellow: var(--yellow);
+  --color-sev-green: var(--green);
+  --font-sans: var(--font-ui);
+  --font-mono: var(--font-code);
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+}
+body {
+  font-family: var(--font-ui), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Surfaces ---------- */
+.neu {
+  background: var(--bg);
+  border-radius: 26px;
+  box-shadow: 10px 10px 22px var(--sd), -10px -10px 22px var(--sl);
+}
+.neu-sm {
+  background: var(--bg);
+  border-radius: 16px;
+  box-shadow: 5px 5px 11px var(--sd), -5px -5px 11px var(--sl);
+}
+.neu-inset {
+  background: var(--bg);
+  border-radius: 20px;
+  box-shadow: inset 6px 6px 12px var(--sd), inset -6px -6px 12px var(--sl);
+}
+.neu-inset-sm {
+  background: var(--bg);
+  border-radius: 12px;
+  box-shadow: inset 3px 3px 7px var(--sd), inset -3px -3px 7px var(--sl);
+}
+
+/* Buttons: raised at rest, pressed-in when active */
+.neu-btn {
+  background: var(--bg);
+  border-radius: 14px;
+  box-shadow: 5px 5px 10px var(--sd), -5px -5px 10px var(--sl);
+  transition: box-shadow 160ms ease, color 160ms ease, transform 120ms ease;
+  color: var(--muted);
+}
+.neu-btn:hover { color: var(--text); }
+.neu-btn:active,
+.neu-btn[data-active="true"] {
+  box-shadow: inset 4px 4px 8px var(--sd), inset -4px -4px 8px var(--sl);
+  color: var(--accent);
+}
+.neu-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.neu-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Range slider in neumorphic style */
+.neu-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--bg);
+  box-shadow: inset 3px 3px 6px var(--sd), inset -3px -3px 6px var(--sl);
+  outline: none;
+}
+.neu-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--bg);
+  box-shadow: 4px 4px 8px var(--sd), -4px -4px 8px var(--sl);
+  border: 3px solid var(--accent);
+  cursor: pointer;
+}
+.neu-range::-moz-range-thumb {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--bg);
+  box-shadow: 4px 4px 8px var(--sd), -4px -4px 8px var(--sl);
+  border: 3px solid var(--accent);
+  cursor: pointer;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* live position pulse on the map */
+.storm-pulse {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 0 rgba(74, 108, 247, .6);
+  animation: pulse 1.8s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(74, 108, 247, .55); }
+  70% { box-shadow: 0 0 0 18px rgba(74, 108, 247, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 108, 247, 0); }
+}
+.shimmer { animation: shimmer 1.2s ease-in-out infinite; }
+@keyframes shimmer { 0%, 100% { opacity: .45 } 50% { opacity: .9 } }
+
+.mapboxgl-map { font-family: inherit; }
+.mapboxgl-popup-content {
+  background: var(--bg) !important; color: var(--text); border-radius: 14px !important;
+  box-shadow: 6px 6px 14px var(--sd), -6px -6px 14px var(--sl) !important; font-size: 12px;
+}
+.mapboxgl-popup-tip { display: none; }
+
+pre.xml { white-space: pre; tab-size: 2; }
+
+/* Single-screen console pages: exactly fill the window below the 64 px nav (xl screens and up) */
+@media (min-width: 1280px) {
+  .console-h { height: calc(100dvh - 5.5rem); }
+}
