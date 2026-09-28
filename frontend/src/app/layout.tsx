@@ -8,7 +8,7 @@ const ui = Manrope({ variable: "--font-ui", subsets: ["latin"] });
 const code = JetBrains_Mono({ variable: "--font-code", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Cyclone Decision Support · PS 26070",
+  title: "TRINETRA (त्रिनेत्र)",
   description: "AI-assisted tropical cyclone detection, intensity, rapid-intensification and track guidance for the North Indian Ocean (research prototype).",
 };
 
