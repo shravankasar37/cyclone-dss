@@ -30,10 +30,7 @@ export function Nav() {
     <header className="mx-auto flex w-full max-w-[1920px] flex-wrap items-center gap-4 px-4 py-3 sm:px-5 xl:h-16 xl:flex-nowrap xl:py-0">
       <Link href="/" className="flex items-center gap-3">
         <span className="neu-sm grid h-10 w-10 place-items-center text-accent"><Tornado size={20} /></span>
-        <span>
-          <span className="block text-[15px] font-extrabold leading-tight text-ink">Cyclone Decision Support</span>
-          <span className="block text-[11px] font-semibold text-faint">SIH 2026 · PS 26070 · North Indian Ocean</span>
-        </span>
+        <span className="text-[17px] font-extrabold leading-tight tracking-wide text-ink">TRINETRA (त्रिनेत्र)</span>
       </Link>
       <nav className="neu-inset-sm order-3 flex w-full gap-1 overflow-x-auto p-1 md:order-none md:ml-6 md:w-auto">
         {LINKS.map((l) => (
